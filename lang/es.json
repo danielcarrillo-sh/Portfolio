@@ -1,0 +1,125 @@
+{
+  "header": {
+    "title": " _______                       __            __         ______                                 __  __  __           \n|       \\                     |  \\          |  \\       /      \\                               |  \\|  \\|  \\          \n| $$$$$$$\\  ______   _______   \\$$  ______  | $$      |  $$$$$$\\  ______    ______    ______   \\$$| $$| $$  ______  \n| $$  | $$ |      \\ |       \\ |  \\ /      \\ | $$      | $$   \\$$ |      \\  /      \\  /      \\ |  \\| $$| $$ /      \\ \n| $$  | $$  \\$$$$$$\\| $$$$$$$\\| $$|  $$$$$$\\| $$      | $$        \\$$$$$$\\|  $$$$$$\\|  $$$$$$\\| $$| $$| $$|  $$$$$$\\\n| $$  | $$ /      $$| $$  | $$| $$| $$    $$| $$      | $$   __  /      $$| $$   \\$$| $$   \\$$| $$| $$| $$| $$  | $$\n| $$__/ $$|  $$$$$$$| $$  | $$| $$| $$$$$$$$| $$      | $$__/  \\|  $$$$$$$| $$      | $$      | $$| $$| $$| $$__/ $$\n| $$    $$ \\$$    $$| $$  | $$| $$ \\$$     \\| $$       \\$$    $$ \\$$    $$| $$      | $$      | $$| $$| $$ \\$$    $$\n \\$$$$$$$   \\$$$$$$$ \\$$   \\$$ \\$$  \\$$$$$$$ \\$$        \\$$$$$$   \\$$$$$$$ \\$$       \\$$       \\$$ \\$$ \\$$  \\$$$$$$",
+    "subtitle": "Ingeniero de Sistemas"
+  },
+
+  "nav": {
+    "about": "Sobre mí",
+    "skills": "Habilidades",
+    "stack": "Stack",
+    "projects": "Proyectos",
+    "contact": "Contacto"
+  },
+
+  "sections": {
+    "about": "Sobre mí",
+    "skills": "Habilidades",
+    "stack": "Stack",
+    "projects": "Proyectos",
+    "contact": "Contacto"
+  },
+
+  "skills": [
+    {
+      "title": "Servidores",
+      "items": [
+        "- Excelente manejo de linux",
+        "- Gestión de servicios (aplicaciones web, bases de datos, servidores de correo, etc)",
+        "- Gestión de almacenamiento y copias de seguridad",
+        "- Monitoreo de rendimiento de servidores",
+	"- Optimización de recursos (CPU, memoria, disco)"
+      ]
+    },
+    {
+      "title": "Redes",
+      "items": [
+        "- Configuración de routers y switches",
+        "- Monitorización de tráfico de red (Wireshark, Nagios, PRTG)",
+        "- Configuración de firewalls y reglas de seguridad",
+        "- VPNs y acceso remoto seguro",
+        "- Troubleshooting de conectividad y latencia"
+      ]
+    },
+    {
+      "title": "Seguridad",
+      "items": [
+        "- Hardening de sistemas y servidores",
+        "- Gestión de parches y vulnerabilidades",
+        "- Implementación de políticas de acceso y autenticación",
+        "- Monitoreo de incidentes de seguridad",
+	"- Copias de seguridad y recuperación ante desastres"
+      ]
+    },
+    {
+      "title": "Virtualización",
+      "items": [
+        "- Administración de VMware vSphere/ESXi",
+        "- Administración de de Hyper-V o KVM",
+        "- Redes de máquinas virtuales",
+        "- Migraciones de entornos físicos a virtuales",
+        "- Optimización de recursos virtuales"
+      ]
+    },
+    {
+      "title": "Programación",
+      "items": [
+        "- Scripts en Python",
+        "- Automatización con Bash",
+        "- Herramientas operativas",
+        "- Web scraping",
+        "- Programación de tareas"
+      ]
+    },
+    {
+      "title": "Operaciones",
+      "items": [
+        "- Monitoreo proactivo 24/7",
+        "- Gestión de incidentes y resolución rápida de problemas",
+        "- Análisis de causa raíz mediante logs y alertas",
+        "- Documentación de procedimientos y configuraciones",
+        "- Infraestructura remota"
+      ]
+    }
+  ],
+
+  "stack": [
+    { "name": "Docker", "icon": "docker.svg" },
+    { "name": "Git", "icon": "git.svg" },
+    { "name": "Linux", "icon": "linux.svg" },
+    { "name": "MySQL", "icon": "mysql.svg" },
+    { "name": "Nmap", "icon": "nmap.svg" },
+    { "name": "OpenVPN", "icon": "openvpn.svg" },
+    { "name": "Python", "icon": "python.svg" },
+    { "name": "VMware", "icon": "vmware.png" },
+    { "name": "Wireshark", "icon": "wireshark.png" }
+  ],
+
+  "terminal": {
+    "prompt": "[root@danielcarrillo.sh] $ ",
+
+    "about": "Soy Ingeniero de Sistemas con experiencia en administración de servidores. A lo largo de mi carrera, me he enfocado en el despliegue de infraestructuras, asegurando que cada sistema cumpla con los estándares de rendimiento, confiabilidad y seguridad requeridos por la organización.\n\nMi conocimiento incluye el hardening de sistemas y la implementación de políticas de seguridad para proteger activos digitales y minimizar riesgos operativos. Además, tengo experiencia en el monitoreo proactivo de servidores y servicios, utilizando herramientas específicas para detectar y resolver incidencias antes de que impacten al negocio.\n\nAdemás, soy capaz de desarrollar scripts y automatizaciones que optimizan procesos repetitivos, o resuelven problemas complejos, lo necesario para mantener la eficiencia operativa y reducir al mínimo la posibilidad de errores humanos, logrando gestionar infraestructuras de manera integral, garantizando entornos estables, seguros y escalables.\n\nEstoy motivado por el avance tecnológico y por encontrar soluciones que mejoren el desempeño y resiliencia de los sistemas, contribuyendo de manera tangible al éxito de los proyectos y al crecimiento de las organizaciones.",
+
+    "uptime": "Más de 2 años de experiencia en Linux",
+
+    "projects": [
+      {
+        "fileName": "blog.html",
+	"linkName": "/blog",
+	"href": "/blog"
+      },
+      {
+        "fileName": "archlinux_hardering.sh",
+	"linkName": "/blog/linux_hardering.sh",
+	"href": "/blog/linux_hardering"
+      }
+    ]
+  },
+
+  "contact": {
+    "email": "Correo",
+    "github": "GitHub",
+    "linkedin": "LinkedIn"
+  }
+}
+

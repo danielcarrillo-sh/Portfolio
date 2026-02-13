@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title id="page-title"></title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<header>
+  <h1 id="home-page">
+    <a href="index.html" id="site-title"></a>
+  </h1>
+
+  <p id="site-subtitle"></p>
+
+  <nav class="header-nav" aria-label="Main navigation">
+    <a href="#about-section" data-nav="about"></a>
+    <a href="#skills-section" data-nav="skills"></a>
+    <a href="#stack-section" data-nav="stack"></a>
+    <a href="#projects-section" data-nav="projects"></a>
+    <a href="#contact-section" data-nav="contact"></a>
+  </nav>
+</header>
+
+<main>
+
+  <section id="about-section">
+    <h2 data-section="about"></h2>
+    <pre id="about-term" class="terminal"></pre>
+  </section>
+
+  <section id="skills-section">
+    <h2 data-section="skills"></h2>
+    <div class="cards" id="skills-cards"></div>
+  </section>
+
+  <section id="stack-section">
+    <h2 data-section="stack"></h2>
+    <div class="stack-icons" id="stack-list"></div>
+  </section>
+
+  <section id="projects-section">
+    <h2 data-section="projects"></h2>
+    <pre id="projects-term" class="terminal"></pre>
+  </section>
+
+  <section id="contact-section">
+    <h2 data-section="contact"></h2>
+
+    <div class="contact-cards">
+      <a href="mailto:danielcarrillo.sh@proton.me" class="contact-card surface">
+        <img src="contact-icons/protonmail.svg" alt="Email">
+        <span data-contact="email"></span>
+      </a>
+
+      <a href="https://github.com/danielcarrillo-sh" class="contact-card surface" target="_blank" rel="noopener noreferrer">
+        <img src="contact-icons/github.svg" alt="GitHub">
+        <span data-contact="github"></span>
+      </a>
+
+      <a href="https://www.linkedin.com/in/daniel-carrillo-0730912a7/" class="contact-card surface" target="_blank" rel="noopener noreferrer">
+        <img src="contact-icons/linkedin.svg" alt="LinkedIn">
+        <span data-contact="linkedin"></span>
+      </a>
+    </div>
+
+  </section>
+
+</main>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
+

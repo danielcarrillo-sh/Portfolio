@@ -1,0 +1,127 @@
+/* Reset y box sizing */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #0b0f14;
+  color: #e6e6e6;
+  font-family: system-ui, monospace;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+/* Titulos */
+h1, h2, h3 {
+  font-family: system-ui, monospace;
+  font-weight: bold;
+  color: #4aa3ff;
+  margin-bottom: 15px;
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+h3 {
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+}
+
+/* Links estilo hacker */
+a {
+  color: #4aa3ff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+a:hover {
+  color: #00d48f;
+  text-shadow: 0 0 5px #00d48f, 0 0 10px #4aa3ff;
+}
+
+/* Contenedor de post */
+.blog-post {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Terminales */
+.terminal {
+  background: #05080c;
+  border: 1px solid #1f2a36;
+  border-radius: 10px;
+  padding: 18px;
+  font-size: clamp(14px, 2vw, 16px);
+  font-family: system-ui, monospace;
+  color: #e6e6e6;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  margin-bottom: 25px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.terminal:hover {
+  border-color: #4aa3ff;
+  box-shadow: 0 10px 20px rgba(74, 163, 255, 0.3);
+}
+
+/* Cursor parpadeante */
+.cursor {
+  display: inline-block;
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* Comandos y salidas */
+.command {
+  color: #00d48f;
+}
+
+.prompt {
+  color: #4aa3ff;
+}
+
+.output {
+  color: #e6e6e6;
+}
+
+/* Código embebido o bloques */
+code, pre {
+  font-family: monospace;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .terminal {
+    padding: 12px;
+    font-size: clamp(12px, 4vw, 14px);
+  }
+}
+

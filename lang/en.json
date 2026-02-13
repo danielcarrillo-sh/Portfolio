@@ -1,0 +1,125 @@
+{
+  "header": {
+    "title": " _______                       __            __         ______                                 __  __  __           \n|       \\                     |  \\          |  \\       /      \\                               |  \\|  \\|  \\          \n| $$$$$$$\\  ______   _______   \\$$  ______  | $$      |  $$$$$$\\  ______    ______    ______   \\$$| $$| $$  ______  \n| $$  | $$ |      \\ |       \\ |  \\ /      \\ | $$      | $$   \\$$ |      \\  /      \\  /      \\ |  \\| $$| $$ /      \\ \n| $$  | $$  \\$$$$$$\\| $$$$$$$\\| $$|  $$$$$$\\| $$      | $$        \\$$$$$$\\|  $$$$$$\\|  $$$$$$\\| $$| $$| $$|  $$$$$$\\\n| $$  | $$ /      $$| $$  | $$| $$| $$    $$| $$      | $$   __  /      $$| $$   \\$$| $$   \\$$| $$| $$| $$| $$  | $$\n| $$__/ $$|  $$$$$$$| $$  | $$| $$| $$$$$$$$| $$      | $$__/  \\|  $$$$$$$| $$      | $$      | $$| $$| $$| $$__/ $$\n| $$    $$ \\$$    $$| $$  | $$| $$ \\$$     \\| $$       \\$$    $$ \\$$    $$| $$      | $$      | $$| $$| $$ \\$$    $$\n \\$$$$$$$   \\$$$$$$$ \\$$   \\$$ \\$$  \\$$$$$$$ \\$$        \\$$$$$$   \\$$$$$$$ \\$$       \\$$       \\$$ \\$$ \\$$  \\$$$$$$",
+    "subtitle": "Systems Engineer"
+  },
+
+  "nav": {
+    "about": "About Me",
+    "skills": "Skills",
+    "stack": "Stack",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+
+  "sections": {
+    "about": "About Me",
+    "skills": "Skills",
+    "stack": "Stack",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+
+  "skills": [
+    {
+      "title": "Servers",
+      "items": [
+        "- Excellent Linux management",
+        "- Service management (web applications, databases, mail servers, etc.)",
+        "- Storage and backup management",
+        "- Server performance monitoring",
+        "- Resource optimization (CPU, memory, disk)"
+      ]
+    },
+    {
+      "title": "Networking",
+      "items": [
+        "- Router and switch configuration",
+        "- Network traffic monitoring (Wireshark, Nagios, PRTG)",
+        "- Firewall configuration and security rules",
+        "- VPNs and secure remote access",
+        "- Connectivity and latency troubleshooting"
+      ]
+    },
+    {
+      "title": "Security",
+      "items": [
+        "- System and server hardening",
+        "- Patch and vulnerability management",
+        "- Access and authentication policy implementation",
+        "- Security incident monitoring",
+        "- Backup and disaster recovery"
+      ]
+    },
+    {
+      "title": "Virtualization",
+      "items": [
+        "- VMware vSphere/ESXi administration",
+        "- Hyper-V or KVM management",
+        "- Virtual machine networking",
+        "- Physical-to-virtual migrations",
+        "- Virtual resource optimization"
+      ]
+    },
+    {
+      "title": "Programming",
+      "items": [
+        "- Python scripting",
+        "- Bash automation",
+        "- Operational tools",
+        "- Web scraping",
+        "- Task programming"
+      ]
+    },
+    {
+      "title": "Operations",
+      "items": [
+        "- 24/7 proactive monitoring",
+        "- Incident management and rapid problem resolution",
+        "- Root cause analysis using logs and alerts",
+        "- Documentation of procedures and configurations",
+        "- Remote infrastructure management"
+      ]
+    }
+  ],
+
+  "stack": [
+    { "name": "Docker", "icon": "docker.svg" },
+    { "name": "Git", "icon": "git.svg" },
+    { "name": "Linux", "icon": "linux.svg" },
+    { "name": "MySQL", "icon": "mysql.svg" },
+    { "name": "Nmap", "icon": "nmap.svg" },
+    { "name": "OpenVPN", "icon": "openvpn.svg" },
+    { "name": "Python", "icon": "python.svg" },
+    { "name": "VMware", "icon": "vmware.png" },
+    { "name": "Wireshark", "icon": "wireshark.png" }
+  ],
+
+  "terminal": {
+    "prompt": "[root@danielcarrillo.sh] $ ",
+
+    "about": "I am a Systems Engineer with experience in server administration. Throughout my career, I have focused on deploying infrastructures, ensuring that each system meets the performance, reliability, and security standards required by the organization.\n\nMy expertise includes system hardening and implementing security policies to protect digital assets and minimize operational risks. Additionally, I have experience in proactive monitoring of servers and services, using specialized tools to detect and resolve incidents before they impact the business.\n\nI am also capable of developing scripts and automations that optimize repetitive processes or solve complex problems, maintaining operational efficiency and minimizing human error. This allows me to manage infrastructures comprehensively, ensuring stable, secure, and scalable environments.\n\nI am motivated by technological advancement and by finding solutions that improve system performance and resilience, contributing tangibly to project success and organizational growth.",
+
+    "uptime": "Over 2 years of Linux experience",
+
+    "projects": [
+      {
+        "fileName": "blog.html",
+        "linkName": "/blog",
+        "href": "/blog"
+      },
+      {
+        "fileName": "archlinux_hardering.sh",
+        "linkName": "/blog/linux_hardering.sh",
+        "href": "/blog/linux_hardering"
+      }
+    ]
+  },
+
+  "contact": {
+    "email": "Email",
+    "github": "GitHub",
+    "linkedin": "LinkedIn"
+  }
+}
+
