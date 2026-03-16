@@ -10,7 +10,7 @@ export function buildUI(i18n) {
 
 function buildPageTitle(i18n) {
   const title = document.getElementById("page-title");
-  title.textContent = `${i18n.header.title} - ${i18n.header.subtitle}`;
+  title.textContent = `Daniel Carrillo - ${i18n.header.subtitle}`;
 }
 
 function buildHeader(i18n) {

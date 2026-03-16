@@ -1,0 +1,141 @@
+:root {
+  --bg-main: #0b0f14;
+  --bg-card: #05080c;
+  --border-color: #1f2a36;
+
+  --text-main: #e6e6e6;
+  --text-accent: #4aa3ff;
+  --text-accent-2: #00d48f;
+
+  --text-term-blue: #9eecff;
+
+  --radius-sm: 8px;
+  --radius-md: 10px;
+
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+
+  --shadow-accent: 0 10px 20px rgba(74, 163, 255, 0.3);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-main);
+  color: var(--text-main);
+  font-family: system-ui, sans-serif;
+  line-height: 1.7;
+}
+
+a {
+  color: var(--text-accent);
+  text-decoration: none;
+  transition: color var(--transition-normal), text-shadow var(--transition-normal);
+}
+
+a:hover {
+  color: var(--text-accent-2);
+  text-shadow: 0 0 5px var(--text-accent-2);
+}
+
+header {
+  text-align: center;
+  padding: 50px 20px 40px;
+}
+
+#home-page {
+  font-family: monospace;
+  text-align: center;
+  margin: 0 auto 10px auto;
+  white-space: pre-wrap;
+  line-height: 1.1;
+  font-size: clamp(1rem, 2vw, 2rem);
+}
+
+#home-page a {
+  font-size: clamp(0.5rem, 1vw, 1rem);
+  text-align: center;
+  display: inline-block;
+  color: var(--text-accent);
+}
+
+#home-page a:hover {
+  color: var(--text-accent-2);
+  text-shadow: 0 0 5px var(--text-accent-2);
+}
+
+#site-subtitle {
+  text-align: center;
+  font-size: clamp(1rem, 1.5vw, 1.5rem);
+  margin-top: 10px;
+}
+
+main {
+  max-width: 900px;
+  margin: auto;
+  padding: 0 20px 80px;
+}
+
+main h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  color: var(--text-accent);
+}
+
+.page-text {
+  margin-bottom: 22px;
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.command {
+  display: block;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin: 25px 0;
+  font-family: ui-monospace, monospace;
+  color: var(--text-term-blue);
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+.command:hover {
+  border-color: var(--text-accent);
+  box-shadow: var(--shadow-accent);
+  transition: border var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+@media (max-width: 600px) {
+
+  main {
+    padding: 0 15px 60px;
+  }
+
+  main h2 {
+    font-size: 1.4rem;
+  }
+
+  .page-text {
+    font-size: 0.95rem;
+  }
+
+  .command {
+    font-size: 0.8rem;
+    padding: 12px;
+  }
+
+  #home-page a {
+    font-size: clamp(0.3rem, 0.6vw, 0.6rem);
+    line-height: 1;
+  }
+
+}

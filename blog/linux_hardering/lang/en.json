@@ -1,0 +1,293 @@
+{
+  "header": {
+    "title": " _______                       __            __         ______                                 __  __  __           \n|       \\                     |  \\          |  \\       /      \\                               |  \\|  \\|  \\          \n| $$$$$$$\\  ______   _______   \\$$  ______  | $$      |  $$$$$$\\  ______    ______    ______   \\$$| $$| $$  ______  \n| $$  | $$ |      \\ |       \\ |  \\ /      \\ | $$      | $$   \\$$ |      \\  /      \\  /      \\ |  \\| $$| $$ /      \\ \n| $$  | $$  \\$$$$$$\\| $$$$$$$\\| $$|  $$$$$$\\| $$      | $$        \\$$$$$$\\|  $$$$$$\\|  $$$$$$\\| $$| $$| $$|  $$$$$$\\\n| $$  | $$ /      $$| $$  | $$| $$| $$    $$| $$      | $$   __  /      $$| $$   \\$$| $$   \\$$| $$| $$| $$| $$  | $$\n| $$__/ $$|  $$$$$$$| $$  | $$| $$| $$$$$$$$| $$      | $$__/  \\|  $$$$$$$| $$      | $$      | $$| $$| $$| $$__/ $$\n| $$    $$ \\$$    $$| $$  | $$| $$ \\$$     \\| $$       \\$$    $$ \\$$    $$| $$      | $$      | $$| $$| $$ \\$$    $$\n\\$$$$$$$   \\$$$$$$$ \\$$   \\$$ \\$$  \\$$$$$$$ \\$$        \\$$$$$$   \\$$$$$$$ \\$$       \\$$       \\$$ \\$$ \\$$  \\$$$$$$",
+    "subtitle": "Systems Engineer"
+  },
+  "main": {
+    "pageTitle": "Arch Linux hardening",
+    
+    "content": [
+      {
+        "type": "text",
+        "value": "Using Arch Linux as a desktop operating system for daily use is an excellent decision. However, it is important to perform a proper configuration, since its philosophy is based on providing a minimal and highly configurable system, which implies that it will not necessarily be the most secure option in every environment if it is used with the default configuration.\nThis is what hardening is for; below I will show the configurations I recommend and personally use on my daily desktop system."
+      },
+
+      {
+        "type": "text",
+        "value": "First of all, we update the system."
+      },
+      {
+        "type": "command",
+        "value": "pacman -Syu"
+      },
+
+      {
+        "type": "text",
+        "value": "Once everything is updated, we begin with the real hardening. Linux by default allows both incoming and outgoing connections, which would give every device on the network access to all the services we have exposed. For this we will use the ufw tool, which is designed to be very easy to use with simple commands, allowing us to configure firewall rules and prevent unwanted access.\nTo begin, we need to install the ufw tool:"
+      },
+      {
+        "type": "command",
+        "value": "pacman -S ufw"
+      },
+
+      {
+        "type": "text",
+        "value": "Then, we will allow all outgoing traffic and deny all incoming traffic."
+      },
+      {
+        "type": "command",
+        "value": "ufw default deny incoming\nufw default allow outgoing\nufw --force enable"
+      },
+
+      {
+        "type": "text",
+        "value": "If we have installed services that we want to allow access to, for example ssh, we must allow them manually, making sure not to expose anything that is not necessary."
+      },
+      {
+        "type": "command",
+        "value": "ufw allow ssh"
+      },
+
+      {
+        "type": "text",
+        "value": "We can also allow the port manually."
+      },
+      {
+        "type": "command",
+        "value": "ufw allow 22/tcp"
+      },
+
+      {
+        "type": "text",
+	"value": "Now, our system will not accept incoming connections, which will make a potential attacker see no open ports on our machine.\n\nFor example, I have two Arch Linux machines where I configured SSH, apache2 and port 4444 listening over tcp, tools I usually use to work from my laptop. This is what an attacker would see if they attempt to perform a port scan."
+      },
+
+      {
+	"type": "command",
+	"value": "┌──(kali@kali)-[~]\n└─$ sudo nmap -p22,80,4444 arch-default\nNmap scan report for 192.168.0.219\nHost is up (0.0019s latency).\n\nPORT     STATE SERVICE\n22/tcp   open  ssh\n80/tcp   open  http\n4444/tcp open  krb524\n\n\n┌──(kali@kali)-[~]\n└─$ sudo nmap -p22,80,4444 arch-hardened\nNmap scan report for 192.168.0.152\nHost is up (0.0013s latency).\n\nPORT     STATE    SERVICE\n22/tcp   open     ssh\n80/tcp   filtered http\n4444/tcp filtered krb524"
+      },
+
+      {
+	"type": "text",
+	"value": "Now the ports appear as filtered (except for port 22 for SSH which we previously enabled), this significantly reduces the attack surface and makes service enumeration more difficult.\nHowever, having port 22 open can still be insecure, so in the next step I will show more secure configurations for the SSH service."
+      },
+
+      {
+        "type": "text",
+        "value": "To begin, we make a backup of the current ssh service configuration, as a precaution in case of any error."
+      },
+      {
+        "type": "command",
+        "value": "cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak"
+      },
+
+      {
+        "type": "text",
+        "value": "We will completely disable root user access through SSH, also remove password authentication for all users and enable key-based authentication, change the default port (we must also make sure to change the port in our firewall rules), and disable TCP port forwarding through SSH, functionality that could be abused to create tunnels that bypass established firewall policies.\nFor that we change the following lines in the file /etc/ssh/sshd_config"
+      },
+      {
+        "type": "command",
+        "value": "PermitRootLogin no\nPasswordAuthentication no\nPubkeyAuthentication yes\nPort 2222\nAllowTcpForwarding no"
+      },
+
+      {
+        "type": "text",
+        "value": "With this configuration it will be necessary to configure keys on the machines from which we are going to access our system, for example from a Debian system.\nAfter that we will use the ssh-keygen command to generate a key pair, and set a unique password for our ssh access."
+      },
+
+      {
+        "type": "command",
+        "value": "debian@debian-server:~$ ssh-keygen\nGenerating public/private ed25519 key pair.\nEnter file in which to save the key (/home/debian/.ssh/id_ed25519):\nCreated directory '/home/debian/.ssh'.\nEnter passphrase for \"/home/debian/.ssh/id_ed25519\" (empty for no passphrase):\nEnter same passphrase again:\nYour identification has been saved in /home/debian/.ssh/id_ed25519\nYour public key has been saved in /home/debian/.ssh/id_ed25519.pub\nThe key fingerprint is:\nSHA256:1ImX6OlPBmCAmyHMn2ZmUwvBHRybnXZD0ISSZ+X5Qts debian@debian-server\nThe key's randomart image is:\n+--[ED25519 256]--+\n|o .o=o+.*+       |\n|.ooo B+++=.o     |\n| ..++oB++*=      |\n|  oO o.+oo=      |\n|  = .   So E     |\n|       . ..      |\n|        . o      |\n|         +       |\n|          .      |\n+----[SHA256]-----+"
+      },
+
+      {
+        "type": "text",
+        "value": "Now it is necessary to place the public key stored in .ssh/id_ed25519.pub (from our Debian machine) into the file .ssh/authorized_keys (on our Arch system) as follows."
+      },
+      {
+        "type": "command",
+        "value": "echo \"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPmZ9zBxSb/ytRI61w1+G9Q+c/vEu+7AOZEcfXhvO8sY debian@debian-server\" >> .ssh/authorized_keys"
+      },
+
+      {
+        "type": "text",
+        "value": "Once this is done, we will have access to our system using the passphrase we specified in our key file."
+      },
+      {
+        "type": "command",
+        "value": "debian@debian-server:~$ ssh arch@192.168.0.152 -p 2222\nEnter passphrase for key '/home/debian/.ssh/id_ed25519':\n[arch@archlinux ~]$ whoami\narch"
+      },
+
+      {
+	"type": "text",
+	"value": "With this our SSH service is a bit more secure than before.\nHere are some examples of the difference in what an attacker would see during a brute force attack attempt assuming our password is in their wordlist.\nWithout hardening, the password would be found and they could gain access to our system."
+      },
+
+      {
+	"type": "command",
+	"value": "┌──(kali@kali)-[~]\n└─$ hydra -l arch -P Desktop/wordlist.txt ssh://arch-default -t 1\nHydra v9.6 (c) 2023 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).\n\nHydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2026-02-15 14:30:28\n[DATA] max 1 task per 1 server, overall 1 task, 6 login tries (l:1/p:6), ~6 tries per task\n[DATA] attacking ssh://192.168.0.219:22/\n[ERROR] ssh target does not support password auth\n[22][ssh] host: 192.168.0.219   login: arch   password: arch\n1 of 1 target successfully completed, 1 valid password found\nHydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2026-02-15 14:30:48"
+      },
+
+      {
+	"type": "text",
+	"value": "Now, with hardening applied, the brute force attack does not even start since password login is not enabled."
+      },
+
+      {
+	"type": "command",
+	"value": "┌──(kali@kali)-[~]\n└─$ hydra -l arch -P Desktop/wordlist.txt ssh://192.168.0.152:2222 -t 1\nHydra v9.6 (c) 2023 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).\n\nHydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2026-02-15 14:32:06\n[DATA] max 1 task per 1 server, overall 1 task, 6 login tries (l:1/p:6), ~6 tries per task\n[DATA] attacking ssh://192.168.0.152:2222/\n[ERROR] target ssh://192.168.0.152:2222/ does not support password authentication (method reply 4)."
+      },
+
+      {
+        "type": "text",
+        "value": "As the next step, we will perform permission hardening on key directories.\nTo begin, we change the permissions of the user's directory so that only our user can modify it."
+      },
+
+      {
+        "type": "command",
+        "value": "chmod 700 /home/arch"
+      },
+
+      {
+	"type": "text",
+	"value": "Some other key directories and files that we must ensure have the proper permissions are the following:"
+      },
+
+      {
+	"type": "command",
+	"value": "/root             700\n/etc              755\n/etc/passwd       644\n/etc/shadow       600\n/var/log          750\n/tmp             1777"
+      },
+
+      {
+	"type": "text",
+	"value": "As a note, in /tmp, we place the 1 at the beginning of the permissions which assigns the sticky bit, which prevents other users who are not owners from deleting files or directories with that bit enabled."
+      },
+
+      {
+        "type": "text",
+        "value": "Now we move on to one of the most important parts, kernel hardening, modifying the system configuration to prevent possible attack vectors that someone could exploit if they gain user-level access.\nFor this, we will create the file /etc/sysctl.d/99-hardening.conf with the following content:"
+      },
+
+      {
+	"type": "command",
+	"value": "kernel.kptr_restrict=2\nkernel.dmesg_restrict=1\nkernel.yama.ptrace_scope=1\nkernel.randomize_va_space=2\nnet.ipv4.ip_forward=0\nnet.ipv4.conf.all.accept_redirects=0\nnet.ipv4.conf.default.accept_redirects=0\nnet.ipv4.conf.all.send_redirects=0\nnet.ipv4.conf.default.send_redirects=0\nnet.ipv4.conf.all.accept_source_route=0\nnet.ipv4.conf.default.accept_source_route=0\nnet.ipv4.conf.all.rp_filter=1\nnet.ipv4.conf.default.rp_filter=1\nvm.mmap_min_addr=65536"
+      },
+
+      {
+	"type": "text",
+	"value": "And we apply the configuration."
+      },
+
+      {
+	"type": "command",
+	"value": "sysctl --system"
+      },
+
+      {
+	"type": "text",
+	"value": "For the explanation, we will go line by line."
+      },
+
+      {
+        "type": "command",
+        "value": "kernel.kptr_restrict=2"
+      },
+      {
+        "type": "text",
+        "value": "kptr means kernel pointer. A pointer is a reference to a memory address. If an attacker can know kernel pointers, they might be able to execute a kernel-level exploit. Here we can assign permission 0 (no protection, any user can see pointers), 1 (root can see pointers) and 2 (no user can see pointers)."
+      },
+
+      {
+        "type": "command",
+        "value": "kernel.dmesg_restrict=1"
+      },
+      {
+        "type": "text",
+        "value": "dmesg is the kernel message buffer, used to see how the kernel communicates with hardware. If an attacker could see this content, they could find information such as driver versions or system errors, which could give them a huge advantage when searching for exploits or vulnerabilities in the system. We apply permission 1 so that root can see this information, since it can also be useful for us as administrators to diagnose hardware errors."
+      },
+
+      {
+        "type": "command",
+        "value": "kernel.yama.ptrace_scope=1"
+      },
+      {
+        "type": "text",
+        "value": "iptrace is a debugging system that allows one process to control another. It is normally used by debuggers or for tracing monitoring processes, but it can be a security issue if a malicious process can use it against a legitimate process, allowing it to read sensitive information from memory, modify the behavior of the process or escalate privileges. We will leave permission 1 so that only the parent process can ptrace its child processes."
+      },
+
+      {
+        "type": "command",
+        "value": "kernel.randomize_va_space=2"
+      },
+      {
+        "type": "text",
+        "value": "ASLR (Address Space Layout Randomization) makes the location of libraries, heap and stack change every time a program runs, making it harder for an attacker to know where to execute malicious code."
+      },
+
+      {
+        "type": "command",
+        "value": "net.ipv4.ip_forward=0"
+      },
+      {
+        "type": "text",
+        "value": "ip_forward controls whether the system can forward IP packets from one interface to another, as a router would do. If this is enabled, an attacker could use the system to compromise other machines or intercept traffic. If we need to configure NAT, VPN or routing using our machine, we should enable it, but not otherwise."
+      },
+
+      {
+        "type": "command",
+        "value": "net.ipv4.conf.all.accept_redirects=0\nnet.ipv4.conf.default.accept_redirects=0"
+      },
+
+      {
+        "type": "text",
+        "value": "This disables ICMP redirect, which are messages usually sent by a router to indicate to a host that there is a more direct route to reach a network. Its function is to optimize routes, however an attacker could abuse this permission to perform a MITM attack, allowing them to intercept the machine's traffic.\nHere, the difference between all and default is that all applies to all existing network interfaces, and default applies to interfaces created after applying the configuration."
+      },
+
+      {
+        "type": "command",
+        "value": "net.ipv4.conf.all.send_redirects=0\nnet.ipv4.conf.default.send_redirects=0"
+      },
+
+      {
+        "type": "text",
+        "value": "It is similar to the previous section, except that in this case our host is the one that could be used to configure additional routes on other devices. In our case we do not want our host to act as a router, so it is convenient to leave it disabled."
+      },
+
+      {
+        "type": "command",
+        "value": "net.ipv4.conf.all.accept_source_route=0\nnet.ipv4.conf.default.accept_source_route=0"
+      },
+
+      {
+        "type": "text",
+        "value": "This would allow creating network packets with a specific route to follow on the network. It could be maliciously used to bypass firewall rules, sniffing attacks or redirect traffic to malicious hosts."
+      },
+
+      {
+        "type": "command",
+        "value": "net.ipv4.conf.all.rp_filter=1\nnet.ipv4.conf.default.rp_filter=1"
+      },
+
+      {
+        "type": "text",
+        "value": "rp_filter means Reverse Path Filter. When enabled, it prevents the host from receiving packets with spoofed IP addresses by comparing the route of the incoming packet with the host's routing table. If it does not match, the packet is simply discarded, preventing an attacker from pretending to be another host via IP and tricking the firewall into allowing unwanted traffic."
+      },
+
+      {
+        "type": "command",
+        "value": "vm.mmap_min_addr=65536"
+      },
+
+      {
+        "type": "text",
+        "value": "This prevents processes from using the mmap() function to allocate memory before the first 64 KB in RAM, which could be used to place and execute malicious code at low addresses, making NULL pointer attacks more difficult."
+      },
+
+      {
+        "type": "text",
+        "value": "With this we finish a basic hardening configuration for Arch Linux. These measures reduce the system's attack surface and help prevent several common exploitation vectors."
+      }
+    ]
+
+  }
+}
