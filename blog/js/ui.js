@@ -6,8 +6,6 @@ export function buildBlogPost(data) {
 
 }
 
-
-
 function buildHeader(data) {
 
   if (!data.header) return;
@@ -26,8 +24,6 @@ function buildHeader(data) {
 
 }
 
-
-
 function buildPageTitle(data) {
 
   const title = document.getElementById("page-title");
@@ -39,8 +35,6 @@ function buildPageTitle(data) {
   title.textContent = `Daniel Carrillo - ${pageTitle}`;
 
 }
-
-
 
 function buildContent(data) {
 
@@ -75,6 +69,38 @@ function buildContent(data) {
       pre.textContent = block.value;
 
       container.appendChild(pre);
+
+    }
+
+    if (block.type === "cards") {
+
+      const cardsContainer = document.createElement("div");
+      cardsContainer.className = "cards";
+
+      block.value.forEach(item => {
+
+	const link = document.createElement("a");
+	link.href = item.url || "#";
+
+        const card = document.createElement("div");
+        card.className = "card surface";
+
+        const h3 = document.createElement("h3");
+        h3.textContent = item.title;
+
+        const p = document.createElement("p");
+        p.textContent = item.description;
+
+        card.appendChild(h3);
+        card.appendChild(p);
+
+	link.appendChild(card);
+
+        cardsContainer.appendChild(link);
+
+      });
+
+      container.appendChild(cardsContainer);
 
     }
 

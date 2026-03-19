@@ -1,5 +1,5 @@
 export function initTerminals(i18n) {
-  terminalCat("about-term", ["cat about.txt", "uptime"], [i18n.terminal.about, i18n.terminal.uptime], 500, i18n);
+  terminalCat("about-term", ["uptime", "cat about.txt"], [i18n.terminal.uptime, i18n.terminal.about], 500, i18n);
   terminalCat("projects-term", ["ls -l /projects"], [lsProjects(i18n)], 3000, i18n);
 }
 
@@ -77,7 +77,7 @@ function lsProjects(i18n) {
       const size = "1234";
       const date = new Date().toDateString().slice(4);
       const name = p.fileName;
-      const link = `<a href="${p.href}" target="_blank" rel="noopener noreferrer">${p.linkName}</a>`;
+      const link = `<a href="${p.href}">${p.linkName}</a>`;
       return `${permissions} ${owner} ${group} ${size} ${date} ${name} -> ${link}`;
     })
     .join("\n");

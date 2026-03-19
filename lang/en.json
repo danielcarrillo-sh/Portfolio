@@ -1,7 +1,7 @@
 {
   "header": {
     "title": " _______                       __            __         ______                                 __  __  __           \n|       \\                     |  \\          |  \\       /      \\                               |  \\|  \\|  \\          \n| $$$$$$$\\  ______   _______   \\$$  ______  | $$      |  $$$$$$\\  ______    ______    ______   \\$$| $$| $$  ______  \n| $$  | $$ |      \\ |       \\ |  \\ /      \\ | $$      | $$   \\$$ |      \\  /      \\  /      \\ |  \\| $$| $$ /      \\ \n| $$  | $$  \\$$$$$$\\| $$$$$$$\\| $$|  $$$$$$\\| $$      | $$        \\$$$$$$\\|  $$$$$$\\|  $$$$$$\\| $$| $$| $$|  $$$$$$\\\n| $$  | $$ /      $$| $$  | $$| $$| $$    $$| $$      | $$   __  /      $$| $$   \\$$| $$   \\$$| $$| $$| $$| $$  | $$\n| $$__/ $$|  $$$$$$$| $$  | $$| $$| $$$$$$$$| $$      | $$__/  \\|  $$$$$$$| $$      | $$      | $$| $$| $$| $$__/ $$\n| $$    $$ \\$$    $$| $$  | $$| $$ \\$$     \\| $$       \\$$    $$ \\$$    $$| $$      | $$      | $$| $$| $$ \\$$    $$\n\\$$$$$$$   \\$$$$$$$ \\$$   \\$$ \\$$  \\$$$$$$$ \\$$        \\$$$$$$   \\$$$$$$$ \\$$       \\$$       \\$$ \\$$ \\$$  \\$$$$$$",
-    "subtitle": "Systems Engineer"
+    "subtitle": "Systems Engineer specializing in Linux"
   },
 
   "nav": {
@@ -98,20 +98,20 @@
   "terminal": {
     "prompt": "[root@danielcarrillo.sh] $ ",
 
-    "about": "I am a Systems Engineer with experience in server administration. Throughout my career, I have focused on deploying infrastructures, ensuring that each system meets the performance, reliability, and security standards required by the organization.\n\nMy expertise includes system hardening and implementing security policies to protect digital assets and minimize operational risks. Additionally, I have experience in proactive monitoring of servers and services, using specialized tools to detect and resolve incidents before they impact the business.\n\nI am also capable of developing scripts and automations that optimize repetitive processes or solve complex problems, maintaining operational efficiency and minimizing human error. This allows me to manage infrastructures comprehensively, ensuring stable, secure, and scalable environments.\n\nI am motivated by technological advancement and by finding solutions that improve system performance and resilience, contributing tangibly to project success and organizational growth.",
+    "uptime": "4+ years of Linux experience",
 
-    "uptime": "Over 2 years of Linux experience",
+    "about": "I am a Systems Engineer with experience in server administration. Throughout my career, I have focused on deploying infrastructures, ensuring that each system meets the performance, reliability, and security standards required by the organization.\n\nMy expertise includes system hardening and implementing security policies to protect digital assets and minimize operational risks. Additionally, I have experience in proactive monitoring of servers and services, using specialized tools to detect and resolve incidents before they impact the business.\n\nI am also capable of developing scripts and automations that optimize repetitive processes or solve complex problems, maintaining operational efficiency and minimizing human error. This allows me to manage infrastructures comprehensively, ensuring stable, secure, and scalable environments.\n\nI am motivated by technological advancement and by finding solutions that improve system performance and resilience, contributing tangibly to project success and organizational growth.",
 
     "projects": [
       {
-        "fileName": "blog.html",
+        "fileName": "blog",
         "linkName": "/blog",
         "href": "/blog"
       },
       {
-        "fileName": "archlinux_hardering.sh",
-        "linkName": "/blog/linux_hardering.sh",
-        "href": "/blog/linux_hardering"
+        "fileName": "archlinux_hardening",
+        "linkName": "/blog/linux_hardening",
+        "href": "/blog/linux_hardening"
       }
     ]
   },

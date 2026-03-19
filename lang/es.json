@@ -1,7 +1,7 @@
 {
   "header": {
     "title": " _______                       __            __         ______                                 __  __  __           \n|       \\                     |  \\          |  \\       /      \\                               |  \\|  \\|  \\          \n| $$$$$$$\\  ______   _______   \\$$  ______  | $$      |  $$$$$$\\  ______    ______    ______   \\$$| $$| $$  ______  \n| $$  | $$ |      \\ |       \\ |  \\ /      \\ | $$      | $$   \\$$ |      \\  /      \\  /      \\ |  \\| $$| $$ /      \\ \n| $$  | $$  \\$$$$$$\\| $$$$$$$\\| $$|  $$$$$$\\| $$      | $$        \\$$$$$$\\|  $$$$$$\\|  $$$$$$\\| $$| $$| $$|  $$$$$$\\\n| $$  | $$ /      $$| $$  | $$| $$| $$    $$| $$      | $$   __  /      $$| $$   \\$$| $$   \\$$| $$| $$| $$| $$  | $$\n| $$__/ $$|  $$$$$$$| $$  | $$| $$| $$$$$$$$| $$      | $$__/  \\|  $$$$$$$| $$      | $$      | $$| $$| $$| $$__/ $$\n| $$    $$ \\$$    $$| $$  | $$| $$ \\$$     \\| $$       \\$$    $$ \\$$    $$| $$      | $$      | $$| $$| $$ \\$$    $$\n\\$$$$$$$   \\$$$$$$$ \\$$   \\$$ \\$$  \\$$$$$$$ \\$$        \\$$$$$$   \\$$$$$$$ \\$$       \\$$       \\$$ \\$$ \\$$  \\$$$$$$",
-    "subtitle": "Ingeniero de Sistemas"
+    "subtitle": "Ingeniero de Sistemas especializado en Linux"
   },
 
   "nav": {
@@ -35,7 +35,7 @@
       "title": "Redes",
       "items": [
         "- Configuración de routers y switches",
-        "- Monitorización de tráfico de red (Wireshark, Nagios, PRTG)",
+        "- Monitorización de tráfico de red (Wireshark, Nagios, Zabbix, PRTG)",
         "- Configuración de firewalls y reglas de seguridad",
         "- VPNs y acceso remoto seguro",
         "- Troubleshooting de conectividad y latencia"
@@ -98,20 +98,20 @@
   "terminal": {
     "prompt": "[root@danielcarrillo.sh] $ ",
 
-    "about": "Soy Ingeniero de Sistemas con experiencia en administración de servidores. A lo largo de mi carrera, me he enfocado en el despliegue de infraestructuras, asegurando que cada sistema cumpla con los estándares de rendimiento, confiabilidad y seguridad requeridos por la organización.\n\nMi conocimiento incluye el hardening de sistemas y la implementación de políticas de seguridad para proteger activos digitales y minimizar riesgos operativos. Además, tengo experiencia en el monitoreo proactivo de servidores y servicios, utilizando herramientas específicas para detectar y resolver incidencias antes de que impacten al negocio.\n\nAdemás, soy capaz de desarrollar scripts y automatizaciones que optimizan procesos repetitivos, o resuelven problemas complejos, lo necesario para mantener la eficiencia operativa y reducir al mínimo la posibilidad de errores humanos, logrando gestionar infraestructuras de manera integral, garantizando entornos estables, seguros y escalables.\n\nEstoy motivado por el avance tecnológico y por encontrar soluciones que mejoren el desempeño y resiliencia de los sistemas, contribuyendo de manera tangible al éxito de los proyectos y al crecimiento de las organizaciones.",
+    "uptime": "4+ años de experiencia en Linux",
 
-    "uptime": "Más de 2 años de experiencia en Linux",
+    "about": "Soy Ingeniero en Sistemas con experiencia en administración de servidores. A lo largo de mi carrera, me he enfocado en el despliegue de infraestructuras, asegurando que cada sistema cumpla con los estándares de rendimiento, confiabilidad y seguridad requeridos por la organización.\n\nMi conocimiento incluye el hardening de sistemas y la implementación de políticas de seguridad para proteger activos digitales y minimizar riesgos operativos. Además, tengo experiencia en el monitoreo proactivo de servidores y servicios, utilizando herramientas específicas para detectar y resolver incidencias antes de que impacten al negocio.\n\nAdemás, soy capaz de desarrollar scripts y automatizaciones que optimizan procesos repetitivos, o resuelven problemas complejos, lo necesario para mantener la eficiencia operativa y reducir al mínimo la posibilidad de errores humanos, logrando gestionar infraestructuras de manera integral, garantizando entornos estables, seguros y escalables.\n\nEstoy motivado por el avance tecnológico y por encontrar soluciones que mejoren el desempeño y resiliencia de los sistemas, contribuyendo de manera tangible al éxito de los proyectos y al crecimiento de las organizaciones.",
 
     "projects": [
       {
-        "fileName": "blog.html",
+        "fileName": "blog",
 	"linkName": "/blog",
 	"href": "/blog"
       },
       {
-        "fileName": "archlinux_hardering.sh",
-	"linkName": "/blog/linux_hardering.sh",
-	"href": "/blog/linux_hardering"
+        "fileName": "archlinux_hardening",
+	"linkName": "/blog/linux_hardening",
+	"href": "/blog/linux_hardening"
       }
     ]
   },
