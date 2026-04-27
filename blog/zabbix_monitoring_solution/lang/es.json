@@ -1,0 +1,214 @@
+{
+  "header": {
+    "title": " _______                       __            __         ______                                 __  __  __           \n|       \\                     |  \\          |  \\       /      \\                               |  \\|  \\|  \\          \n| $$$$$$$\\  ______   _______   \\$$  ______  | $$      |  $$$$$$\\  ______    ______    ______   \\$$| $$| $$  ______  \n| $$  | $$ |      \\ |       \\ |  \\ /      \\ | $$      | $$   \\$$ |      \\  /      \\  /      \\ |  \\| $$| $$ /      \\ \n| $$  | $$  \\$$$$$$\\| $$$$$$$\\| $$|  $$$$$$\\| $$      | $$        \\$$$$$$\\|  $$$$$$\\|  $$$$$$\\| $$| $$| $$|  $$$$$$\\\n| $$  | $$ /      $$| $$  | $$| $$| $$    $$| $$      | $$   __  /      $$| $$   \\$$| $$   \\$$| $$| $$| $$| $$  | $$\n| $$__/ $$|  $$$$$$$| $$  | $$| $$| $$$$$$$$| $$      | $$__/  \\|  $$$$$$$| $$      | $$      | $$| $$| $$| $$__/ $$\n| $$    $$ \\$$    $$| $$  | $$| $$ \\$$     \\| $$       \\$$    $$ \\$$    $$| $$      | $$      | $$| $$| $$ \\$$    $$\n\\$$$$$$$   \\$$$$$$$ \\$$   \\$$ \\$$  \\$$$$$$$ \\$$        \\$$$$$$   \\$$$$$$$ \\$$       \\$$       \\$$ \\$$ \\$$  \\$$$$$$",
+    "subtitle": "Ingeniero de Sistemas especializado en Linux"
+  },
+  "main": {
+    "pageTitle": "Zabbix como sistema de monitoreo",
+    
+    "content": [
+      {
+        "type": "text",
+	"value": "He estado usando Zabbix durante un año aproximadamente como sistema de monitoreo y lo considero bastante robusto y en general, estable, siempre que esté bien configurado, especialmente la base de datos, he escuchado que Zabbix se comporta mejor con PostgreSQL, con grandes cantidades de datos gracias a la compresión de datos, sin embargo a este punto una migración no es tan viable ya que estamos esperando la nueva actualización de Zabbix, tal vez actualice esto cuando haga todo eso. Pero por ahora, explicaré una instalación limpia de Zabbix, configuración de notificaciones y configuración avanzada de base de datos."
+      },
+      {
+        "type": "text",
+	"value": "En este caso, lo instalaré en un servidor debian 13, para comenzar actualizamos el sistema e instalamos zabbix y sus dependencias."
+      },
+      {
+        "type": "command",
+	"value": "sudo apt update\nsudo apt upgrade\nwget https://repo.zabbix.com/zabbix/7.4/release/debian/pool/main/z/zabbix-release/zabbix-release_latest_7.4+debian13_all.deb\nsudo dpkg -i zabbix-release_latest_7.4+debian13_all.deb\nsudo apt update\nsudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent"
+      },
+      {
+        "type": "text",
+	"value": "Con esto, tendremos instalado Zabbix y podremos validarlo con el siguiente comando:"
+      },
+      {
+        "type": "command",
+	"value": "zabbix@zabbix:~$ sudo systemctl status zabbix-server\n○ zabbix-server.service - Zabbix Server\n     Loaded: loaded (/usr/lib/systemd/system/zabbix-server.service; disabled; preset: enabled)\n     Active: inactive (dead)"
+      },
+      {
+        "type": "text",
+	"value": "Ahora vamos con la instalación de MySQL, que es la base de datos que uso día a día y tengo más estudiada su configuración, tuve que descargar manualmente el repositorio de mysql y enviarlo con scp al servidor Zabbix y luego de instalar las dependencias, procedemos a instalarlo con dpkg y actualizamos el sistema."
+      },
+      {
+        "type": "command",
+	"value": "scp Descargas/mysql-apt-config_0.8.36-1_all.deb zabbix@192.168.122.180:/home/zabbix/\nsudo apt install lsb-release gnupg\nsudo dpkg -i mysql-apt-config_0.8.36-1_all.deb\nsudo apt update\nsudo apt install mysql-server"
+      },
+      {
+        "type": "text",
+	"value": "En esta parte nos pedirá unos ajustes básicos para instalar MySQL, entre ellos la versión a instalar, yo elegí la lts, y si queremos conectores, dejaré la opción habilitada puesto que son necesarios, además configuramos la contraseña del usuario root de MySQL, una vez configurado esto, tendremos instalada la base de datos y podemos verificarlo con el siguiente comando:"
+      },
+      {
+        "type": "command",
+	"value": "zabbix@zabbix:~$ sudo systemctl status mysql\n● mysql.service - MySQL Community Server\n     Loaded: loaded (/usr/lib/systemd/system/mysql.service; enabled; preset: enabled)\n     Active: active (running) since Wed 2026-04-08 20:45:58 CDT; 7s ago\n Invocation: a1e1d633dd614a3d909a5e7dbb76b5f3\n       Docs: man:mysqld(8)\n             http://dev.mysql.com/doc/refman/en/using-systemd.html\n   Main PID: 17066 (mysqld)\n     Status: \"Server is operational\"\n      Tasks: 35 (limit: 2301)\n     Memory: 422.3M (peak: 437.3M)\n        CPU: 655ms\n     CGroup: /system.slice/mysql.service\n             └─17066 /usr/sbin/mysqld\n\nApr 08 20:45:57 zabbix systemd[1]: Starting mysql.service - MySQL Community Server...\nApr 08 20:45:58 zabbix systemd[1]: Started mysql.service - MySQL Community Server."
+      },
+      {
+        "type": "text",
+	"value": "Ahora, siguiendo los pasos de la documentación oficial, vamos a configurar la base de datos, primero accedemos a la base de datos con la contraseña configurada anteriormente."
+      },
+      {
+        "type": "command",
+	"value": "mysql -u root -p"
+      },
+      {
+        "type": "text",
+	"value": "Dentro de MySQL, vamos a usar los siguientes comandos, para crear una base de datos, un usuario, y configurar los privilegios, obviamente elegiremos una contraseña segura."
+      },
+      {
+	"type": "command",
+	"value": "create database zabbix character set utf8mb4 collate utf8mb4_bin;\ncreate user zabbix@localhost identified by 'password';\ngrant all privileges on zabbix.* to zabbix@localhost;\nset global log_bin_trust_function_creators = 1;\nquit;"
+      },
+      {
+	"type": "text",
+	"value": "Importamos el esquema y los datos iniciales, usando la contraseña que acabamos de crear."
+      },
+      {
+	"type": "command",
+	"value": "zcat /usr/share/zabbix/sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix"
+      },
+      {
+	"type": "text",
+	"value": "Entramos nuevamente a MySQL."
+      },
+      {
+        "type": "command",
+	"value": "mysql -u root -p"
+      },
+      {
+	"type": "text",
+	"value": "Y desactivaremos nuevamente el log_bin_trust_function_creators, ya que no se necesitará más."
+      },
+      {
+	"type": "command",
+	"value": "set global log_bin_trust_function_creators = 0;\nquit;"
+      },
+      {
+	"type": "text",
+	"value": "Editamos el archivo /etc/zabbix/zabbix_server.conf y ponemos la contraseña de la base de datos."
+      },
+      {
+	"type": "command",
+	"value": "DBPassword=password"
+      },
+      {
+	"type": "text",
+	"value": "Reiniciamos los servicios de MySQL, Apache y Zabbix y los habilitamos para que inicien junto con el servidor"
+      },
+      {
+	"type": "command",
+	"value": "systemctl restart mysql zabbix-server zabbix-agent apache2\nsystemctl enable mysql zabbix-server zabbix-agent apache2"
+      },
+      {
+	"type": "text",
+	"value": "Al entrar por primera vez en la interfaz web, nos hará automáticamente una validación de las dependencias instaladas en el servidor, y nos pedirá algunos datos para terminar de configurar la base de datos.\nUna vez configurado el servidor, pasaremos a crear un cliente de prueba, para esto usaré un servidor Rocky Linux como prueba, dentro de Rocky Linux, en Rocky usaremos rpm para instalar paquetes externos."
+      },
+      {
+	"type": "command",
+	"value": "wget https://repo.zabbix.com/zabbix/7.4/release/rhel/10/noarch/zabbix-release-latest-7.4.el10.noarch.rpm\nsudo rpm -i zabbix-release-latest-7.4.el10.noarch.rpm\nsudo dnf update\nsudo dnf install zabbix-agent"
+      },
+      {
+	"type": "text",
+	"value": "Una vez instalado Zabbix Agent, vamos a editar la opción de Server, ServerActive con la IP de nuestro servidor zabbix y Hostname con un nombre que vamos a definir para nuestro sistema del archivo /etc/zabbix/zabbix_agentd.conf."
+      },
+      {
+	"type": "command",
+	"value": "Server=SERVIDOR_IP\nServerActive=SERVIDOR_IP\nHostname=NOMBRE_AGENTE"
+      },
+      {
+	"type": "text",
+	"value": "Una vez configurado el agente en nuestro cliente linux, vamos a crear el Host en el servidor Zabbix, esto se hace desde la interfaz web, vamos a Data Collection -> Hosts -> Create Host y ponemos los datos de nuestro cliente."
+      },
+      {
+	"type": "image",
+	"src": "img/host-rocky-config.png",
+	"alt": "Configuración de Host en Zabbix usando Zabbix Agent"
+      },
+      {
+	"type": "text",
+	"value": "Una vez hecho esto, tenemos un Host listo, deberíamos ver en verde el botón de Availability en Monitoring -> Hosts."
+      },
+      {
+	"type": "image",
+	"src": "img/host-rocky-availability.png",
+	"alt": "Host configurado correctamente en Zabbix"
+      },
+      {
+	"type": "text",
+	"value": "Finalmente, explicaré como se configuran las alertas por telegram en Zabbix, con esto tendremos un sistema de monitoreo automatizado bastante completo sobre los hosts que agreguemos.\nPara comenzar, creamos un bot en telegram, enviando un mensaje a el usuario @botfather, con el comando /start, luego escribimos el comando /newbot y ponemos los datos que nos pide, los cuales serían el nombre y el nombre de usuario del bot, este último debe terminar con _bot."
+      },
+      {
+	"type": "image",
+	"src": "img/telegram_create_bot.png",
+	"alt": "Creación del bot en telegram"
+      },
+      {
+	"type": "text",
+	"value": "Una vez creado el bot de telegram, vamos a crear un grupo donde vamos a recibir las notificaciones, asegurándonos de agregar a nuestro bot al grupo."
+      },
+      {
+	"type": "image",
+	"src": "img/telegram_add_bot.png",
+	"alt": "Agregar bot al grupode telegram"
+      },
+      {
+	"type": "image",
+	"src": "img/telegram_group.png"
+      },
+      {
+	"type": "text",
+	"value": "Una vez creado el grupo, procedemos a la configuración en Zabbix, en el apartado Alerts > Media types buscamos Telegram, dentro de los parámetros de configuración en api_token colocamos el token que nos dió al crear el bot de telegram y marcamos la casilla Enabled."
+      },
+      {
+	"type": "image",
+	"src": "img/telegram_media_type_config.png",
+	"alt": "Configuración de Media type en Zabbix"
+      },
+      {
+	"type": "text",
+	"value": "En el apartado Users > Users seleccionamos nuestro usuario con los permisos correctos, yo usé el usuario Admin, vamos al menú Media y damos al botón Add, en Send to, colocamos el ID de grupo, el cual podemos encontrar en la URL de Telegram cuando abrimos el grupo y elegimos las severidades que deseamos que sean notificadas, asegurándonos de dejar el Media habilitado."
+      },
+      {
+	"type": "image",
+	"src": "img/telegram_group_url.png",
+	"alt": "ID del grupo en la URL de Telegram"
+      },
+      {
+	"type": "image",
+	"src": "img/zabbix_media_config.png"
+      },
+      {
+	"type": "text",
+	"value": "Finalmente, vamos a Alerts > Action > Trigger actions y modificamos el de nombre Report problems to Zabbix administrators, en el menú Operations, vamos a dar al botón Add en los tres submenús de Operations, Recovery operations y Update operations y en Send to users, colocamos el usuario al que agregamos el Media y en Send to media type, elegimos la opción Telegram."
+      },
+      {
+	"type": "image",
+	"src": "img/zabbix_operations_config.png",
+	"alt": "Configuración de Operations en Zabbix"
+      },
+      {
+	"type": "image",
+	"src": "img/zabbix_recovery_update_operations.png",
+	"alt": "Configuración de Recovery operations y Update operations en Zabbix"
+      },
+      {
+	"type": "image",
+	"src": "img/zabbix_trigger_actions_config.png",
+	"alt": "Configuración de Trigger actions en Zabbix"
+      },
+      {
+	"type": "text",
+	"value": "Para finalizar, apagaré mi máquina virtual Rocky para comprobar si se envían correctamente las notificaciones."
+      },
+      {
+	"type": "image",
+	"src": "img/telegram_notifications.png",
+	"alt": "Notificación enviada por nuestro bot al grupo de telegram"
+      },
+      {
+	"type": "text",
+	"value": "Y listo, las notificaciones están llegando correctamente, por lo que nuestro sistema de monitoreo está funcionando correctamente."
+      }
+    ]
+  }
+}
