@@ -1,6 +1,6 @@
 export function initTerminals(i18n) {
   terminalCat("about-term", ["uptime", "cat about.txt"], [i18n.terminal.uptime, i18n.terminal.about], 500, i18n);
-  terminalCat("projects-term", ["ls -l /projects"], [lsProjects(i18n)], 3000, i18n);
+  terminalCat("projects-term", ["ls -l ~/projects"], [lsProjects(i18n)], 3000, i18n);
 }
 
 function terminalCat(id, commands, outputs, delay = 2000, i18n) {

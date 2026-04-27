@@ -19,7 +19,12 @@
             "title": "Hardening en Arch Linux",
 	    "url": "/blog/linux_hardening",
             "description": "Configuraciones que suelo aplicar en mi sistema Arch Linux de uso personal, para reducir vectores de ataque que por defecto no suelen tener la mejor seguridad."
-          }
+          },
+	  {
+	    "title": "Monitoreo en tiempo real usando Zabbix",
+	    "url": "/blog/zabbix_monitoring_solution",
+	    "description": "Como preparar desde cero un servidor de monitoreo con alertas personalizadas, también se enseña como elegir las configuraciones más óptimas para el servidor para mejorar el rendimiento y la seguridad."
+	  }
         ]
       }
     ]

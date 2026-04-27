@@ -52,6 +52,15 @@ function buildContent(data) {
 
   main.content.forEach(block => {
 
+    if (block.type === "subtitle") {
+	const h2 = document.createElement("h2");
+	h2.className = "page-subtitle";
+	h2.textContent = block.value;
+
+	container.appendChild(h2);
+
+    }
+
     if (block.type === "text") {
 
       const p = document.createElement("p");
@@ -69,6 +78,17 @@ function buildContent(data) {
       pre.textContent = block.value;
 
       container.appendChild(pre);
+
+    }
+    
+    if (block.type === "image") {
+
+      const img = document.createElement("img");
+      img.className = "image";
+      img.src = block.src;
+      img.alt = block.alt || "";
+
+      container.appendChild(img);
 
     }
 

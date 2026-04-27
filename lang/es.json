@@ -35,7 +35,7 @@
       "title": "Redes",
       "items": [
         "- Configuración de routers y switches",
-        "- Monitorización de tráfico de red (Wireshark, Nagios, Zabbix, PRTG)",
+        "- Monitorización de tráfico de red (Wireshark, Zabbix, PRTG)",
         "- Configuración de firewalls y reglas de seguridad",
         "- VPNs y acceso remoto seguro",
         "- Troubleshooting de conectividad y latencia"
@@ -45,17 +45,17 @@
       "title": "Seguridad",
       "items": [
         "- Hardening de sistemas y servidores",
-        "- Gestión de parches y vulnerabilidades",
-        "- Implementación de políticas de acceso y autenticación",
-        "- Monitoreo de incidentes de seguridad",
-	"- Copias de seguridad y recuperación ante desastres"
+        "- Gestión de vulnerabilidades y parches",
+        "- Implementación de políticas de acceso",
+        "- Monitoreo y gestión de incidentes",
+	"- Estrategias de recuperación ante desastres"
       ]
     },
     {
       "title": "Virtualización",
       "items": [
-        "- Administración de VMware vSphere/ESXi",
-        "- Administración de de Hyper-V o KVM",
+        "- Administración de VMware, KVM o Hyper-V",
+        "- Alta disponibilidad y clustering",
         "- Redes de máquinas virtuales",
         "- Migraciones de entornos físicos a virtuales",
         "- Optimización de recursos virtuales"
@@ -66,7 +66,7 @@
       "items": [
         "- Scripts en Python",
         "- Automatización con Bash",
-        "- Herramientas operativas",
+        "- Escaneos personalizados",
         "- Web scraping",
         "- Programación de tareas"
       ]
@@ -75,9 +75,9 @@
       "title": "Operaciones",
       "items": [
         "- Monitoreo proactivo 24/7",
-        "- Gestión de incidentes y resolución rápida de problemas",
-        "- Análisis de causa raíz mediante logs y alertas",
-        "- Documentación de procedimientos y configuraciones",
+        "- Gestión y resolución de incidentes",
+        "- Análisis de causa raíz",
+        "- Herramientas de documentación",
         "- Infraestructura remota"
       ]
     }
@@ -100,7 +100,7 @@
 
     "uptime": "4+ años de experiencia en Linux",
 
-    "about": "Soy Ingeniero en Sistemas con experiencia en administración de servidores. A lo largo de mi carrera, me he enfocado en el despliegue de infraestructuras, asegurando que cada sistema cumpla con los estándares de rendimiento, confiabilidad y seguridad requeridos por la organización.\n\nMi conocimiento incluye el hardening de sistemas y la implementación de políticas de seguridad para proteger activos digitales y minimizar riesgos operativos. Además, tengo experiencia en el monitoreo proactivo de servidores y servicios, utilizando herramientas específicas para detectar y resolver incidencias antes de que impacten al negocio.\n\nAdemás, soy capaz de desarrollar scripts y automatizaciones que optimizan procesos repetitivos, o resuelven problemas complejos, lo necesario para mantener la eficiencia operativa y reducir al mínimo la posibilidad de errores humanos, logrando gestionar infraestructuras de manera integral, garantizando entornos estables, seguros y escalables.\n\nEstoy motivado por el avance tecnológico y por encontrar soluciones que mejoren el desempeño y resiliencia de los sistemas, contribuyendo de manera tangible al éxito de los proyectos y al crecimiento de las organizaciones.",
+    "about": "Soy Ingeniero en Sistemas con experiencia en administración de servidores. A lo largo de mi carrera, me he enfocado en el despliegue y gestión de infraestructuras, asegurando que cada sistema cumpla esté configurado a la medida para cumplir con los objetivos de la organización.\n\nMi conocimiento incluye el hardening de sistemas y la implementación de políticas de seguridad para proteger activos digitales y minimizar riesgos operativos. Además, tengo experiencia en el monitoreo de servidores y servicios, utilizando herramientas para detectar y resolver incidencias reduciendo al mínimo el tiempo fuera de servicio y evitando afectaciones mayores al negocio.\n\nAdemás, soy capaz de desarrollar scripts y automatizaciones que optimizan procesos repetitivos, o resuelven problemas complejos, garantizando entornos estables, seguros y escalables.",
 
     "projects": [
       {
@@ -112,6 +112,11 @@
         "fileName": "archlinux_hardening",
 	"linkName": "/blog/linux_hardening",
 	"href": "/blog/linux_hardening"
+      },
+      {
+        "fileName": "zabbix_monitoring_solution",
+	"linkName": "/blog/zabbix_monitoring_solution",
+	"href": "/blog/zabbix_monitoring_solution"
       }
     ]
   },
