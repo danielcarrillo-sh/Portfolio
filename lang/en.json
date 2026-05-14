@@ -112,6 +112,11 @@
         "fileName": "archlinux_hardening",
         "linkName": "/blog/linux_hardening",
         "href": "/blog/linux_hardening"
+      },
+      {
+        "fileName": "zabbix_monitoring_solution",
+        "linkName": "/blog/zabbix_monitoring_solution",
+        "href": "/blog/zabbix_monitoring_solution"
       }
     ]
   },
