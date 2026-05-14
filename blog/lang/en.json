@@ -1,0 +1,32 @@
+{
+  "header": {
+    "title": " _______                       __            __         ______                                 __  __  __           \n|       \\                     |  \\          |  \\       /      \\                               |  \\|  \\|  \\          \n| $$$$$$$\\  ______   _______   \\$$  ______  | $$      |  $$$$$$\\  ______    ______    ______   \\$$| $$| $$  ______  \n| $$  | $$ |      \\ |       \\ |  \\ /      \\ | $$      | $$   \\$$ |      \\  /      \\  /      \\ |  \\| $$| $$ /      \\ \n| $$  | $$  \\$$$$$$\\| $$$$$$$\\| $$|  $$$$$$\\| $$      | $$        \\$$$$$$\\|  $$$$$$\\|  $$$$$$\\| $$| $$| $$|  $$$$$$\\\n| $$  | $$ /      $$| $$  | $$| $$| $$    $$| $$      | $$   __  /      $$| $$   \\$$| $$   \\$$| $$| $$| $$| $$  | $$\n| $$__/ $$|  $$$$$$$| $$  | $$| $$| $$$$$$$$| $$      | $$__/  \\|  $$$$$$$| $$      | $$      | $$| $$| $$| $$__/ $$\n| $$    $$ \\$$    $$| $$  | $$| $$ \\$$     \\| $$       \\$$    $$ \\$$    $$| $$      | $$      | $$| $$| $$ \\$$    $$\n\\$$$$$$$   \\$$$$$$$ \\$$   \\$$ \\$$  \\$$$$$$$ \\$$        \\$$$$$$   \\$$$$$$$ \\$$       \\$$       \\$$ \\$$ \\$$  \\$$$$$$",
+    "subtitle": "Systems Engineer specialized in Linux"
+  },
+  "main": {
+    "pageTitle": "Blog",
+
+    "content": [
+      {
+        "type": "cards",
+        "value": [
+          {
+            "title": "Blog",
+	    "url": "/blog",
+            "description": "Personal documentation about projects and issues I have worked on within Linux."
+          },
+          {
+            "title": "Hardening in Arch Linux",
+	    "url": "/blog/linux_hardening",
+            "description": "Configurations I usually apply on my personal Arch Linux system to reduce attack vectors that by default do not usually have the best security."
+          },
+	  {
+	    "title": "Real-time monitoring using Zabbix",
+	    "url": "/blog/zabbix_monitoring_solution",
+      "description": "How to prepare a monitoring server from scratch with custom alerts. It also explains how to choose the most optimal server configurations to improve performance and security."
+	  }
+        ]
+      }
+    ]
+  }
+}

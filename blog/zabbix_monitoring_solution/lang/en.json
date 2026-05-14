@@ -1,0 +1,213 @@
+{
+  "header": {
+    "title": " _______                       __            __         ______                                 __  __  __           \n|       \\                     |  \\          |  \\       /      \\                               |  \\|  \\|  \\          \n| $$$$$$$\\  ______   _______   \\$$  ______  | $$      |  $$$$$$\\  ______    ______    ______   \\$$| $$| $$  ______  \n| $$  | $$ |      \\ |       \\ |  \\ /      \\ | $$      | $$   \\$$ |      \\  /      \\  /      \\ |  \\| $$| $$ /      \\ \n| $$  | $$  \\$$$$$$\\| $$$$$$$\\| $$|  $$$$$$\\| $$      | $$        \\$$$$$$\\|  $$$$$$\\|  $$$$$$\\| $$| $$| $$|  $$$$$$\\\n| $$  | $$ /      $$| $$  | $$| $$| $$    $$| $$      | $$   __  /      $$| $$   \\$$| $$   \\$$| $$| $$| $$| $$  | $$\n| $$__/ $$|  $$$$$$$| $$  | $$| $$| $$$$$$$$| $$      | $$__/  \\|  $$$$$$$| $$      | $$      | $$| $$| $$| $$__/ $$\n| $$    $$ \\$$    $$| $$  | $$| $$ \\$$     \\| $$       \\$$    $$ \\$$    $$| $$      | $$      | $$| $$| $$ \\$$    $$\n\\$$$$$$$   \\$$$$$$$ \\$$   \\$$ \\$$  \\$$$$$$$ \\$$        \\$$$$$$   \\$$$$$$$ \\$$       \\$$       \\$$ \\$$ \\$$  \\$$$$$$",
+    "subtitle": "Systems Engineer specialized in Linux"
+  },
+  "main": {
+    "pageTitle": "Zabbix as a monitoring system",
+    "content": [
+      {
+        "type": "text",
+        "value": "I have been using Zabbix for about a year as a monitoring system and I consider it quite robust and generally stable, as long as it is properly configured, especially the database. I have heard that Zabbix performs better with PostgreSQL when handling large amounts of data thanks to data compression. However, at this point a migration is not very viable since we are waiting for the new Zabbix update. Maybe I will update this when I do all of that. But for now, I will explain a clean installation of Zabbix, notification configuration, and advanced database configuration."
+      },
+      {
+        "type": "text",
+        "value": "In this case, I will install it on a Debian 13 server. To begin, we update the system and install Zabbix and its dependencies."
+      },
+      {
+        "type": "command",
+        "value": "sudo apt update\nsudo apt upgrade\nwget https://repo.zabbix.com/zabbix/7.4/release/debian/pool/main/z/zabbix-release/zabbix-release_latest_7.4+debian13_all.deb\nsudo dpkg -i zabbix-release_latest_7.4+debian13_all.deb\nsudo apt update\nsudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent"
+      },
+      {
+        "type": "text",
+        "value": "With this, we will have Zabbix installed and we can validate it with the following command:"
+      },
+      {
+        "type": "command",
+        "value": "zabbix@zabbix:~$ sudo systemctl status zabbix-server\n○ zabbix-server.service - Zabbix Server\n     Loaded: loaded (/usr/lib/systemd/system/zabbix-server.service; disabled; preset: enabled)\n     Active: inactive (dead)"
+      },
+      {
+        "type": "text",
+        "value": "Now we move on to installing MySQL, which is the database I use daily and whose configuration I have studied more. I had to manually download the MySQL repository and send it via scp to the Zabbix server, and after installing the dependencies, we proceed to install it with dpkg and update the system."
+      },
+      {
+        "type": "command",
+        "value": "scp Descargas/mysql-apt-config_0.8.36-1_all.deb zabbix@192.168.122.180:/home/zabbix/\nsudo apt install lsb-release gnupg\nsudo dpkg -i mysql-apt-config_0.8.36-1_all.deb\nsudo apt update\nsudo apt install mysql-server"
+      },
+      {
+        "type": "text",
+        "value": "At this stage, it will ask us for some basic settings to install MySQL, including the version to install. I chose the LTS, and if we want connectors, I will leave the option enabled since they are necessary. We also configure the password for the MySQL root user. Once this is configured, we will have the database installed and we can verify it with the following command:"
+      },
+      {
+        "type": "command",
+        "value": "zabbix@zabbix:~$ sudo systemctl status mysql\n● mysql.service - MySQL Community Server\n     Loaded: loaded (/usr/lib/systemd/system/mysql.service; enabled; preset: enabled)\n     Active: active (running) since Wed 2026-04-08 20:45:58 CDT; 7s ago\n Invocation: a1e1d633dd614a3d909a5e7dbb76b5f3\n       Docs: man:mysqld(8)\n             http://dev.mysql.com/doc/refman/en/using-systemd.html\n   Main PID: 17066 (mysqld)\n     Status: \"Server is operational\"\n      Tasks: 35 (limit: 2301)\n     Memory: 422.3M (peak: 437.3M)\n        CPU: 655ms\n     CGroup: /system.slice/mysql.service\n             └─17066 /usr/sbin/mysqld\n\nApr 08 20:45:57 zabbix systemd[1]: Starting mysql.service - MySQL Community Server...\nApr 08 20:45:58 zabbix systemd[1]: Started mysql.service - MySQL Community Server."
+      },
+      {
+        "type": "text",
+        "value": "Now, following the steps from the official documentation, we are going to configure the database. First, we access the database using the password configured earlier."
+      },
+      {
+        "type": "command",
+        "value": "mysql -u root -p"
+      },
+      {
+        "type": "text",
+        "value": "Inside MySQL, we will use the following commands to create a database, a user, and configure privileges. Obviously, we will choose a secure password."
+      },
+      {
+        "type": "command",
+        "value": "create database zabbix character set utf8mb4 collate utf8mb4_bin;\ncreate user zabbix@localhost identified by 'password';\ngrant all privileges on zabbix.* to zabbix@localhost;\nset global log_bin_trust_function_creators = 1;\nquit;"
+      },
+      {
+        "type": "text",
+        "value": "We import the schema and the initial data using the password we just created."
+      },
+      {
+        "type": "command",
+        "value": "zcat /usr/share/zabbix/sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -p zabbix"
+      },
+      {
+        "type": "text",
+        "value": "We enter MySQL again."
+      },
+      {
+        "type": "command",
+        "value": "mysql -u root -p"
+      },
+      {
+        "type": "text",
+        "value": "And we will disable log_bin_trust_function_creators again, since it will no longer be needed."
+      },
+      {
+        "type": "command",
+        "value": "set global log_bin_trust_function_creators = 0;\nquit;"
+      },
+      {
+        "type": "text",
+        "value": "We edit the file /etc/zabbix/zabbix_server.conf and set the database password."
+      },
+      {
+        "type": "command",
+        "value": "DBPassword=password"
+      },
+      {
+        "type": "text",
+        "value": "We restart the MySQL, Apache, and Zabbix services and enable them to start with the server."
+      },
+      {
+        "type": "command",
+        "value": "systemctl restart mysql zabbix-server zabbix-agent apache2\nsystemctl enable mysql zabbix-server zabbix-agent apache2"
+      },
+      {
+        "type": "text",
+        "value": "When entering the web interface for the first time, it will automatically validate the dependencies installed on the server, and it will ask us for some information to finish configuring the database.\nOnce the server is configured, we will move on to creating a test client. For this, I will use a Rocky Linux server as a test. Inside Rocky Linux, we will use rpm to install external packages."
+      },
+      {
+        "type": "command",
+        "value": "wget https://repo.zabbix.com/zabbix/7.4/release/rhel/10/noarch/zabbix-release-latest-7.4.el10.noarch.rpm\nsudo rpm -i zabbix-release-latest-7.4.el10.noarch.rpm\nsudo dnf update\nsudo dnf install zabbix-agent"
+      },
+      {
+        "type": "text",
+        "value": "Once Zabbix Agent is installed, we will edit the Server and ServerActive options with the IP of our Zabbix server, and Hostname with a name that we will define for our system in the file /etc/zabbix/zabbix_agentd.conf."
+      },
+      {
+        "type": "command",
+        "value": "Server=SERVER_IP\nServerActive=SERVER_IP\nHostname=AGENT_NAME"
+      },
+      {
+        "type": "text",
+        "value": "Once the agent is configured on our Linux client, we will create the Host on the Zabbix server. This is done from the web interface. We go to Data Collection -> Hosts -> Create Host and enter the data for our client."
+      },
+      {
+        "type": "image",
+        "src": "img/host-rocky-config.png",
+        "alt": "Host configuration in Zabbix using Zabbix Agent"
+      },
+      {
+        "type": "text",
+        "value": "Once this is done, we have a Host ready. We should see the Availability button in green under Monitoring -> Hosts."
+      },
+      {
+        "type": "image",
+        "src": "img/host-rocky-availability.png",
+        "alt": "Host correctly configured in Zabbix"
+      },
+      {
+        "type": "text",
+        "value": "Finally, I will explain how to configure Telegram alerts in Zabbix. With this, we will have a fairly complete automated monitoring system for the hosts we add.\nTo begin, we create a bot in Telegram by sending a message to the user @botfather with the /start command, then we type the /newbot command and provide the information it asks for, which would be the name and the bot username. The latter must end with _bot."
+      },
+      {
+        "type": "image",
+        "src": "img/telegram_create_bot.png",
+        "alt": "Creating the bot in Telegram"
+      },
+      {
+        "type": "text",
+        "value": "Once the Telegram bot is created, we will create a group where we will receive notifications, making sure to add our bot to the group."
+      },
+      {
+        "type": "image",
+        "src": "img/telegram_add_bot.png",
+        "alt": "Add bot to Telegram group"
+      },
+      {
+        "type": "image",
+        "src": "img/telegram_group.png"
+      },
+      {
+        "type": "text",
+        "value": "Once the group is created, we proceed with the configuration in Zabbix. In the Alerts > Media types section, we search for Telegram. Inside the configuration parameters, in api_token we place the token that was given to us when creating the Telegram bot and check the Enabled box."
+      },
+      {
+        "type": "image",
+        "src": "img/telegram_media_type_config.png",
+        "alt": "Media type configuration in Zabbix"
+      },
+      {
+        "type": "text",
+        "value": "In the Users > Users section, we select our user with the correct permissions. I used the Admin user. We go to the Media menu and click the Add button. In Send to, we place the group ID, which we can find in the Telegram URL when we open the group, and we choose the severities that we want to be notified about, making sure to leave the Media enabled."
+      },
+      {
+        "type": "image",
+        "src": "img/telegram_group_url.png",
+        "alt": "Group ID in the Telegram URL"
+      },
+      {
+        "type": "image",
+        "src": "img/zabbix_media_config.png"
+      },
+      {
+        "type": "text",
+        "value": "Finally, we go to Alerts > Action > Trigger actions and modify the one named Report problems to Zabbix administrators. In the Operations menu, we click the Add button in the three submenus: Operations, Recovery operations, and Update operations. In Send to users, we select the user to whom we added the Media, and in Send to media type, we choose the Telegram option."
+      },
+      {
+        "type": "image",
+        "src": "img/zabbix_operations_config.png",
+        "alt": "Operations configuration in Zabbix"
+      },
+      {
+        "type": "image",
+        "src": "img/zabbix_recovery_update_operations.png",
+        "alt": "Recovery operations and Update operations configuration in Zabbix"
+      },
+      {
+        "type": "image",
+        "src": "img/zabbix_trigger_actions_config.png",
+        "alt": "Trigger actions configuration in Zabbix"
+      },
+      {
+        "type": "text",
+        "value": "To finish, I will shut down my Rocky virtual machine to check if the notifications are sent correctly."
+      },
+      {
+        "type": "image",
+        "src": "img/telegram_notifications.png",
+        "alt": "Notification sent by our bot to the Telegram group"
+      },
+      {
+        "type": "text",
+        "value": "And that's it, the notifications are arriving correctly, so our monitoring system is working properly."
+      }
+    ]
+  }
+}
